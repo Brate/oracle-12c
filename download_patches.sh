@@ -38,14 +38,14 @@ PLATLANG=226P
 
 echo
 # echo "Downloading the patches:"
-for URL in $(< ${CD}/files/ORA_112040.url)
+for URL in $(< ${CD}/files/ORA_121020.url)
 do
     fname=`echo ${URL} | awk -F"=" '{print $NF;}' | sed "s/[?&]//g"`
     download=true
 
     if [ -f files/${fname} ]; then
         echo -n "MD5 ${fname}... "
-        md5=$(grep ${fname} ${CD}/files/ORA_112040.md5 | awk '{print $2}')
+        md5=$(grep ${fname} ${CD}/files/ORA_121020.md5 | awk '{print $2}')
         fmd5=$(openssl dgst -md5 ${CD}/files/${fname}  | awk '{print $2}')
 
         if [ "X"$md5 == "X"$fmd5 ]; then

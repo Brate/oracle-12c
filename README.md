@@ -2,13 +2,12 @@
 
 This image has been forked from [https://www.github.com/wscherphof/oracle-12c/](https://www.github.com/wscherphof/oracle-12c/).
 
-A [Docker](https://www.docker.com/) [image](https://registry.hub.docker.com/u/wscherphof/oracle-12c/) with [Oracle Database 12c Enterprise Edition Release 12.1.0.2.0](http://www.oracle.com/technetwork/database/enterprise-edition/overview/index.html) running in [Oracle Linux 7](http://www.oracle.com/us/technologies/linux/overview/index.html)
+A [Docker](https://www.docker.com/) image with [Oracle Database 12c Enterprise Edition Release 12.1.0.2.0](http://www.oracle.com/technetwork/database/enterprise-edition/overview/index.html) running in [Oracle Linux 7](http://www.oracle.com/us/technologies/linux/overview/index.html)
 - Default ORCL database on port 1521
 
 ## Install
 1. [Install Docker](https://docs.docker.com/installation/#installation)
-1. `$ docker pull wscherphof/oracle-12c`
-2. That worked once, but the image was removed by Docker Support on Oracle's request, so you'll need to [build](https://github.com/Brate/oracle-12c#build) it yourself
+2. [Build](https://github.com/Brate/oracle-12c#build) it yourself
 
 ## Run
 Create and run a container named orcl:
@@ -125,7 +124,14 @@ There's no ssh daemon or similar configured in the image. If you need a command 
 ## Build
 Should you want to modify & build your own image:
 
+Clone the git repository
+
+`git clone https://www.github.com/Brate/oracle-12c`
+
 #### Step 1
+
+If you have a MyOracle Support account, you can run `download_oracle12c.sh` script. If you not:
+
 1) Download `linuxamd64_12102_database_1of2.zip` & `linuxamd64_12102_database_2of2.zip` from [Oracle Tech Net](http://www.oracle.com/technetwork/database/enterprise-edition/downloads/database12c-linux-download-2240591.html)
 
 2) Put the 2 zip files in the `step1` directory
