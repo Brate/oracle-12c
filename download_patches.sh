@@ -3,6 +3,8 @@
 ORA_112040=13390677
 ORA_121020=21419221
 
+PATCHES=ORA_121020
+
 PREF=`basename $0`
 CD=`dirname $0`
 CFG=${CD}/.${PREF}.cfg
@@ -38,14 +40,14 @@ PLATLANG=226P
 
 echo
 # echo "Downloading the patches:"
-for URL in $(< ${CD}/files/ORA_121020.url)
+for URL in $(< ${CD}/files/${PATCHES}.url)
 do
     fname=`echo ${URL} | awk -F"=" '{print $NF;}' | sed "s/[?&]//g"`
     download=true
 
     if [ -f files/${fname} ]; then
         echo -n "MD5 ${fname}... "
-        md5=$(grep ${fname} ${CD}/files/ORA_121020.md5 | awk '{print $2}')
+        md5=$(grep ${fname} ${CD}/files/${PATCHES}.md5 | awk '{print $2}')
         fmd5=$(openssl dgst -md5 ${CD}/files/${fname}  | awk '{print $2}')
 
         if [ "X"$md5 == "X"$fmd5 ]; then
