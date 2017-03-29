@@ -3,6 +3,8 @@ MAINTAINER Wouter Scherphof <wouter.scherphof@gmail.com>
 
 RUN rm -rf /tmp/install
 
+ENV ORACLE_BASE /u01/app/oracle
+ENV CVUQDISK_GRP oinstall
 ENV ORACLE_SID ORCL
 ENV ORACLE_HOME $ORACLE_BASE/product/12.1.0/dbhome_1
 ENV PATH $ORACLE_HOME/bin:$PATH
