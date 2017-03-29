@@ -5,7 +5,7 @@ ADD p21419221_121020_Linux-x86-64_1of10.zip /tmp/install/p21419221_121020_Linux-
 ADD p21419221_121020_Linux-x86-64_2of10.zip /tmp/install/p21419221_121020_Linux-x86-64_2of10.zip
 ADD p21419221_121020_Linux-x86-64_3of10.zip /tmp/install/p21419221_121020_Linux-x86-64_3of10.zip
 
-RUN yum -y install unzip binutils compat-libcap1 compat-libstdc++-33 compat-libstdc++-33.i686 gcc gcc-c++ glibc.i686 glibc glibc-devel glibc-devel.i686 ksh libgcc.i686 libgcc libstdc++ libstdc++.i686 libstdc++-devel libstdc++-devel.i686 libaio libaio.i686 libaio-devel libaio-devel.i686 libXext libXext.i686 libXtst libXtst.i686 libX11 libX11.i686 libXau libXau.i686 libxcb libxcb.i686 libXi libXi.i686 make sysstat vte3 smartmontools
+RUN yum -y install unzip binutils compat-libcap1 compat-libstdc++-33 compat-libstdc++-33.i686 gcc gcc-c++ glibc.i686 glibc glibc-devel glibc-devel.i686 ksh libgcc.i686 libgcc libstdc++ libstdc++.i686 libstdc++-devel libstdc++-devel.i686 libaio libaio.i686 libaio-devel libaio-devel.i686 libXext libXext.i686 libXtst libXtst.i686 libX11 libX11.i686 libXau libXau.i686 libxcb libxcb.i686 libXi libXi.i686 make sysstat vte3 smartmontools && yum -y update
 
 RUN cd /tmp/install && unzip p21419221_121020_Linux-x86-64_1of10.zip && unzip p21419221_121020_Linux-x86-64_2of10.zip && rm *.zip
 

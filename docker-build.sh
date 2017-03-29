@@ -15,33 +15,48 @@ ${DOCKER} start step1
 
 ${DOCKER} exec -it step1 /tmp/install/install 
 ${DOCKER} stop step1
-${DOCKER} commit step1 oracle-12c:installed && {
-    IID=$(docker images | awk '/step1/ { print $3 }')
-    if [ -n "${IID}" ] ; then
-        ${DOCKER} rmi ${IID}
-    fi
+
+${DOCKER} commit step1 oracle-12c:committed
+${DOCKER} create --shm-size=4g -ti --name committed oracle-12c:committed /bin/bash
+${DOCKER} export committed | ${DOCKER} import - oracle-12c:installed || {
+    echo "Erro durante o import"
+    exit 1
 }
 
-${DOCKER} build -t oracle-12c:step2 step2 && {
-    IID=$(docker images | awk '/installed/ { print $3 }')
-    if [ -n "${IID}" ] ; then
-        ${DOCKER} rmi ${IID}
-    fi
+${DOCKER} build -t oracle-12c:step2 step2
+${DOCKER} create --shm-size=4g -ti --name step2 oracle-12c:step2 /bin/bash && {
+    ${DOCKER} container rm committed
+    ${DOCKER} container rm step1
+
+    ${DOCKER} rmi oracle-12c:installed
+    ${DOCKER} rmi oracle-12c:committed
+    ${DOCKER} rmi oracle-12c:step1
+
+    ${DOCKER} image prune -f
 }
-${DOCKER} create --shm-size=4g -ti --name step2 oracle-12c:step2 /bin/bash
+
 ${DOCKER} start step2
-
 ${DOCKER} exec -it step2 /tmp/create 
 ${DOCKER} stop step2
-${DOCKER} commit step2 oracle-12c:created && {
-    IID=$(docker images | awk '/step2/ { print $3 }')
-    if [ -n "${IID}" ] ; then
-        ${DOCKER} rmi ${IID}
-    fi
+
+${DOCKER} commit step2 oracle-12c:committed
+${DOCKER} create --shm-size=4g -ti --name committed oracle-12c:committed /bin/bash
+
+${DOCKER} export committed | ${DOCKER} import - oracle-12c:created || {
+    echo "Erro durante o import"
+    exit 1
 }
 
 ${DOCKER} build -t oracle-12c step3
-${DOCKER} create --shm-size=4g -ti --name oracle-12c oracle-12c:latest 
+${DOCKER} create --shm-size=4g -ti --name oracle-12c oracle-12c:latest /tmp/start && {
+    ${DOCKER} container rm committed
+    ${DOCKER} container rm step2
 
+    ${DOCKER} rmi oracle-12c:created
+    ${DOCKER} rmi oracle-12c:committed
+    ${DOCKER} rmi oracle-12c:step2
 
-#docker run --shm-size=4g -ti --name step1 oracle-12c:step1 /bin/bash /tmp/install/install
+    ${DOCKER} image prune -f
+}
+
+${DOCKER} start oracle-12c
