@@ -5,6 +5,8 @@ CWD=$(pwd)
 
 [ -z "${DOCKER}" ] && { echo "Docker not found"; exit 1; }
 
+${CWD}/download_patches.sh --ORA121020
+
 ln -f $CWD/files/p21419221_121020_Linux-x86-64_1of10.zip $CWD/step1/p21419221_121020_Linux-x86-64_1of10.zip
 ln -f $CWD/files/p21419221_121020_Linux-x86-64_2of10.zip $CWD/step1/p21419221_121020_Linux-x86-64_2of10.zip
 ln -f $CWD/files/p21419221_121020_Linux-x86-64_3of10.zip $CWD/step1/p21419221_121020_Linux-x86-64_3of10.zip
@@ -12,6 +14,10 @@ ln -f $CWD/files/p21419221_121020_Linux-x86-64_3of10.zip $CWD/step1/p21419221_12
 ${DOCKER} build -t oracle-12c:step1 step1
 ${DOCKER} create --shm-size=4g -ti --name step1 oracle-12c:step1 /bin/bash
 ${DOCKER} start step1
+
+rm -f $CWD/step1/p21419221_121020_Linux-x86-64_1of10.zip
+rm -f $CWD/step1/p21419221_121020_Linux-x86-64_2of10.zip
+rm -f $CWD/step1/p21419221_121020_Linux-x86-64_3of10.zip
 
 ${DOCKER} exec -it step1 /tmp/install/install 
 ${DOCKER} stop step1
